@@ -1,3 +1,4 @@
+  nop
 test:
   li    $s0, 3           # Load a 3 into $s0
   li    $s1, 4           # Load a 4 into $s1
@@ -8,6 +9,6 @@ test:
 
 # Final Expected 
 # $t0 1
-# $t1 0
+# $t1 2
 # $t2 3 
-# $t3 7
+# $t3 3
