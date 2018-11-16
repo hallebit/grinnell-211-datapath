@@ -1,8 +1,6 @@
 import assembler
 import pips
 
-# Lab & Starter Code developed by Charlie Curtsinger
-
 # The instruction decorator tells the assembler to create a new syntax rule for add instructions.
 # The "#" spots indicate operands, which are passed in as parameters to the function below.
 # The second parameter indicates the number of instructions this rule will create (1 in this case)
@@ -100,7 +98,52 @@ def sltu(dest, operand1, operand2):
 def sltiu(dest, op1, immediate):
   return pips.iformat(opcode='sltu', r0=dest, r1=op1, imm=immediate)
 
+# Encode a j instruction
+@assembler.instruction('j #', 1)
+def j(immediate):
+  return pips.iformat(opcode='j', r0='$zero', r1='$zero', imm=immediate)
+
+# Encode a jal instruction
+@assembler.instruction('jal #', 1)
+def jal(immediate):
+  return pips.iformat(opcode='j', r0='$ra', r1='$zero', imm=immediate, link=True)
+
+# Encode a jr instruction
+@assembler.instruction('jr #', 1)
+def jr(dest):
+  return pips.rformat(opcode='j', r0='$zero', r1='$zero', r2=dest)
+
+# Encode a beq instruction
+@assembler.instruction('beq #, #, #', 1)
+def beq(operand1, operand2, immediate):
+  return pips.iformat(opcode='beq', r0=operand1, r1=operand2, imm=immediate)
+
+# Encode a bne instruction
+@assembler.instruction('bne #, #, #', 1)
+def bne(operand1, operand2, immediate):
+  return pips.iformat(opcode='bne', r0=operand1, r1=operand2, imm=immediate)
+
+# Encode an lw instruction
+@assembler.instruction('lw #, #', 1)
+def lw(dest, operand1):
+  return pips.rformat(opcode='lw', r0=dest, r1=operand1, r2='$zero')
+
+# Encode an sw instruction
+@assembler.instruction('sw #, #', 1)
+def sw(dest, operand1):
+  return pips.rformat(opcode='sw', r0=dest, r1=operand1, r2='$zero')
+
+# Encode an lb instruction
+@assembler.instruction('lb #, #', 1)
+def lb(dest, operand1):
+  return pips.rformat(opcode='lb', r0=dest, r1=operand1, r2='$zero')
+
+# Encode an sb instruction
+@assembler.instruction('sb #, #', 1)
+def sb(dest, operand1):
+  return pips.rformat(opcode='sb', r0=dest, r1=operand1, r2='$zero')
+
 # Encode a nop instruction
 @assembler.instruction('nop', 1)
 def nop():
-  return 00000000
+  return pips.iformat(opcode='add', r0='$zero', r1='$zero', imm=0)
