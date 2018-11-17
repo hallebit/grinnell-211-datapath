@@ -22,9 +22,16 @@ place:
 there:
 
 
-# Expected Values
+# Output Values
 # $t0 0
 # $t1 1
+# $t2 1
+# $t3 3
+
+# Expected Values
+# $t0 1
+# $t1 0
 # $t2 2
 # $t3 3
+
 
