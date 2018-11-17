@@ -91,7 +91,8 @@ opcode_table = {
   'sb':   11, # Store an 8-bit value to memory
   'sw':   12, # Store a 16-bit value to memory
   'beq':  13, # Branch to a destination if two registers are equal
-  'bne':  14  # Branch to a destination if two registers are different
+  'bne':  14,  # Branch to a destination if two registers are different
+  'j':    15  # Jump unconditionally to a destination
 }
 
 # Utility function to convert an opcode to its index
