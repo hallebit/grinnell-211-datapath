@@ -124,24 +124,24 @@ def bne(operand1, operand2, immediate):
   return pips.iformat(opcode='bne', r0=operand1, r1=operand2, imm=immediate)
 
 # Encode an lw instruction
-@assembler.instruction('lw #, #', 1)
-def lw(dest, operand1):
-  return pips.rformat(opcode='lw', r0=dest, r1=operand1, r2='$zero')
+@assembler.instruction('lw #, #, #', 1)
+def lw(dest, operand1, immediate):
+  return pips.iformat(opcode='lw', r0=dest, r1=operand1, imm=immediate)
 
 # Encode an sw instruction
-@assembler.instruction('sw #, #', 1)
-def sw(dest, operand1):
-  return pips.rformat(opcode='sw', r0=dest, r1=operand1, r2='$zero')
+@assembler.instruction('sw #, #, #', 1)
+def sw(dest, operand1, immediate):
+  return pips.iformat(opcode='sw', r0=dest, r1=operand1, imm=immediate)
 
 # Encode an lb instruction
-@assembler.instruction('lb #, #', 1)
-def lb(dest, operand1):
-  return pips.rformat(opcode='lb', r0=dest, r1=operand1, r2='$zero')
+@assembler.instruction('lb #, #, #', 1)
+def lb(dest, operand1, immediate):
+  return pips.iformat(opcode='lb', r0=dest, r1=operand1, imm=immediate)
 
 # Encode an sb instruction
-@assembler.instruction('sb #, #', 1)
-def sb(dest, operand1):
-  return pips.rformat(opcode='sb', r0=dest, r1=operand1, r2='$zero')
+@assembler.instruction('sb #, #, #', 1)
+def sb(dest, operand1, immediate):
+  return pips.iformat(opcode='sb', r0=dest, r1=operand1, imm=immediate)
 
 # Encode a nop instruction
 @assembler.instruction('nop', 1)
