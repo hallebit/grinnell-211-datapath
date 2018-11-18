@@ -23,15 +23,13 @@ there:
 
 
 # Output Values
-# $t0 0
-# $t1 1
+# $t0 1
+# $t1 0
 # $t2 1
-# $t3 3
+# $t3 4
 
 # Expected Values
 # $t0 1
 # $t1 0
 # $t2 2
 # $t3 3
-
-
