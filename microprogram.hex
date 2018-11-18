@@ -72,14 +72,14 @@ v2.0 raw
 1a30
 
 # Opcode 13: beq
-# ALU op = 3. Conditional Branch = 1. 
-# 001 0011 0000
-0130
+# ALU op = 3. Conditional Branch = 1. Use r_0 = 1.
+# 011 0011 0000
+0330
 
 # Opcode 14: bne
-# ALU op = 3. Conditional Branch = 1. Branch Invert = 1.
-# 101 0011 0000 
-0530
+# ALU op = 3. Conditional Branch = 1. Use r_0 = 1. Branch Invert = 1.
+# 111 0011 0000 
+0730
 
 # Opcode 15: j
 # Write enable = 1. Jump bit = 1. 
