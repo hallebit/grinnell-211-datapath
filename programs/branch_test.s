@@ -21,13 +21,6 @@ place:
   addi $t3, $t3, 1
 there:
 
-
-# Output Values
-# $t0 1
-# $t1 0
-# $t2 1
-# $t3 4
-
 # Expected Values
 # $t0 1
 # $t1 0
