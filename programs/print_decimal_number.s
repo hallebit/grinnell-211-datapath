@@ -5,10 +5,10 @@
   nop # First instruction does not execute
 
 main: 
-  li $a0, 1
+  li $a0, 302
   jal print_decimal_number
   nop
-  li   $t2, 5
+  li   $t2, 5			
   j HALT 
   nop
 
@@ -43,7 +43,7 @@ quobase:
 # procedure, print_decimal_number
 # produces, prints $a0 to ASCII digit
 print_decimal_number:
-  bne  $a0, $zero, p_d_n_nonzero
+  bne  $a0, $zero, p_d_n_nonzero	# If $a0 == 0, don't jump
   nop
   li   $t0, ASCII0
   li   $t1, TERMINAL 
@@ -51,32 +51,32 @@ print_decimal_number:
   jr   $ra
   nop
 p_d_n_nonzero:
-  addi $sp, $sp, -12		# Create space on the stack
-  sw   $ra, 0($sp)		# Put $ra on stack
-  sw   $a0, 4($sp)		# Put $a0 on stack
-  li   $a1, 10			# Set second parameter to 10
-  jal  remainder		# Set $v0 = $a0 % 10
+  addi $sp, $sp, -12			# Create space on the stack
+  sw   $ra, 0($sp)			# Put $ra on stack
+  sw   $a0, 4($sp)			# Put $a0 on stack
+  li   $a1, 10				# Set second parameter to 10
+  jal  remainder			# Set $v0 = $a0 % 10
   nop
-  li   $t3, 5
-  sw   $s0, 8($sp)		# Put original $s0 on stack
-  lw   $v0, 0($s0)		# Put remainder in $s0
-  lw   $a0, 4($sp)		# Retrieve orig $a0 from stack
-  slt  $t0, $s0, $a0		# Put 1 in $t0 if $s0 < $a0
-  beq  $t0, $zero, p_d_n_skip	# If $v0 >= $a0 
+  sw   $s0, 8($sp)			# Put original $s0 on stack
+  add  $s0, $zero, $v0			# Put remainder in $s0
+  lw   $a0, 4($sp)			# Retrieve orig $a0 from stack
+  slt  $t0, $s0, $a0			# Put 1 in $t0 if $s0 < $a0
+  beq  $t0, $zero, p_d_n_skip		# If $s0 >= $a0, don't jump 
   nop
-  jal  quotient			# $a0 = original $a0, $a1 = 10
+  add  $v0, $zero, $zero
+  jal  quotient				# $a0 = original $a0, $a1 = 10
   nop
-  lw   $a0, 0($v0) 		# Set $a0 to quotient result
+  add  $a0, $v0, $zero 			# Set $a0 to quotient result
   jal  print_decimal_number
   nop		
 p_d_n_skip: 
   li   $t0, ASCII0
-  li   $t1, TERMINAL 
-  add  $t0, $s0, $t0		# '0' + remainder result
-  sb   $t0, 0($t1)
-  lw   $ra, 0($sp)		# Retrieve $ra from stack
-  lw   $s0, 8($sp) 		# Retrieve $s0 from stack
-  addi $sp, $sp, 12		# Put stack back where it was
+  li   $t1, TERMINAL 	
+  add  $t0, $s0, $t0			# '0' + remainder result
+  sb   $t0, 0($t1)	
+  lw   $ra, 0($sp)			# Retrieve $ra from stack
+  lw   $s0, 8($sp) 			# Retrieve $s0 from stack
+  addi $sp, $sp, 12			# Put stack back where it was
   jr $ra
   nop
 
