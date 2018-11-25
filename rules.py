@@ -123,40 +123,45 @@ def beq(operand1, operand2, immediate):
 def bne(operand1, operand2, immediate):
   return pips.iformat(opcode='bne', r0=operand1, r1=operand2, imm=immediate)
 
-# Encode an lw instruction
+# Encode a lw instruction
 @assembler.instruction('lw #, #(#)', 1)
 def lw(dest, immediate, operand1):
   return pips.iformat(opcode='lw', r0=dest, r1=operand1, imm=immediate)
 
-# Encode an sw instruction
+# Encode a sw instruction
 @assembler.instruction('sw #, #(#)', 1)
 def sw(dest, immediate, operand1):
   return pips.iformat(opcode='sw', r0=dest, r1=operand1, imm=immediate)
 
-# Encode an lb instruction
+# Encode a lb instruction
 @assembler.instruction('lb #, #(#)', 1)
 def lb(dest, immediate, operand1):
   return pips.iformat(opcode='lb', r0=dest, r1=operand1, imm=immediate)
 
-# Encode an sb instruction
+# Encode a sb instruction
 @assembler.instruction('sb #, #(#)', 1)
 def sb(dest, immediate, operand1):
   return pips.iformat(opcode='sb', r0=dest, r1=operand1, imm=immediate)
 
-# Encode an sll instruction
+# Encode a sll instruction
 @assembler.instruction('sll #, #, #', 1)
 def sll(dest, operand1, immediate):
   return pips.rformat(opcode='add', r0=dest, r1='$zero', r2=operand1, shift_type=pips.SHIFT_LEFT, shift_amt=immediate)
 
-# Encode an srl instruction
+# Encode a srl instruction
 @assembler.instruction('srl #, #, #', 1)
 def srl(dest, operand1, immediate):
   return pips.rformat(opcode='add', r0=dest, r1='$zero', r2=operand1, shift_type=pips.SHIFT_RIGHT_LOGICAL, shift_amt=immediate)
 
-# Encode an sra instruction
+# Encode a sra instruction
 @assembler.instruction('sra #, #, #', 1)
 def sra(dest, operand1, immediate):
   return pips.rformat(opcode='add', r0=dest, r1='$zero', r2=operand1, shift_type=pips.SHIFT_RIGHT_ARITHMETIC, shift_amt=immediate)
+
+# Encode a not instruction
+@assembler.instruction('not #, #', 1)
+def not_instr(dest, op1):
+  return pips.iformat(opcode='xor', r0=dest, r1=op1, imm=65535)
 
 # Encode a nop instruction
 @assembler.instruction('nop', 1)
