@@ -1,7 +1,5 @@
 import assembler
 
-# Lab & Starter Code developed by Charlie Curtsinger
-
 ############################
 ### PIPS Assembler Rules ###
 ############################
@@ -38,9 +36,15 @@ def iformat(opcode, r0, r1, imm, link=False):
          '00' + assembler.bits(link, 1) + '1' + \
          assembler.bits(assembler.immediate(imm, 16), 16)
 
+# Constants for shift types
+SHIFT_NONE = 0
+SHIFT_LEFT = 1
+SHIFT_RIGHT_LOGICAL = 2
+SHIFT_RIGHT_ARITHMETIC = 3
+
 # Register Format
-#   | opcode | r0    | r1    | unused | link | 0 | r2    | shift type | shift amt. | unused |
-#     31-28    27-24   23-20   19-18    17     16  15-12   11-10        9-5          4-0
+#   | opcode | r0    | r1    | unused | link | 0 | r2    | shift type | unused | shift amt. |
+#     31-28    27-24   23-20   19-18    17     16  15-12   11-10        9-4      3-0
 # See the encoding function below for a description of each field
 
 # Generate an instruction encoding in register format
@@ -66,13 +70,15 @@ def iformat(opcode, r0, r1, imm, link=False):
 #
 # @param shift amt.  How many bits should the value in r2 be shifted? Pass in an integer value
 #                    between 0 and 31 (inclusive).
-def rformat(opcode, r0, r1, r2, link=False, shift_type=0, shift_amt=0):
+def rformat(opcode, r0, r1, r2, link=False, shift_type=SHIFT_NONE, shift_amt=0):
   return assembler.bits(encode_op(opcode), 4) + \
          assembler.bits(encode_reg(r0), 4) + \
          assembler.bits(encode_reg(r1), 4) + \
          '00' + assembler.bits(link, 1) + '0' + \
          assembler.bits(encode_reg(r2), 4) + \
-         assembler.bits(shift_type, 2) + assembler.bits(shift_amt, 5) + '00000'
+         assembler.bits(shift_type, 2) + '00' + \
+         '0000' + \
+         assembler.bits(assembler.immediate(shift_amt, 4), 4)
          
 
 # The opcode field is encoded as follows:
@@ -91,7 +97,7 @@ opcode_table = {
   'sb':   11, # Store an 8-bit value to memory
   'sw':   12, # Store a 16-bit value to memory
   'beq':  13, # Branch to a destination if two registers are equal
-  'bne':  14,  # Branch to a destination if two registers are different
+  'bne':  14, # Branch to a destination if two registers are different
   'j':    15  # Jump unconditionally to a destination
 }
 
