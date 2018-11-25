@@ -163,6 +163,16 @@ def sra(dest, operand1, immediate):
 def not_instr(dest, op1):
   return pips.iformat(opcode='xor', r0=dest, r1=op1, imm=65535)
 
+#Encode a push instruction
+@assembler.instruction('push #', 2) 
+def push_instr(reg):
+  return addi('$sp', '$sp', '-2') + sw(reg, 0, '$sp')
+
+#Encode a pop instruction
+@assembler.instruction('pop #', 2) 
+def pop_instr(reg):
+  return lw(reg, 0, '$sp') + addi('$sp', '$sp', '2')
+
 # Encode a nop instruction
 @assembler.instruction('nop', 1)
 def nop():
