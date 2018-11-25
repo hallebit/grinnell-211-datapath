@@ -173,6 +173,26 @@ def push_instr(reg):
 def pop_instr(reg):
   return lw(reg, 0, '$sp') + addi('$sp', '$sp', '2')
 
+# Encode a blt instruction
+@assembler.instruction('blt! #, #, #', 2)
+def blt(operand1, operand2, immediate):
+  return slt(operand1, operand1, operand2) + bne(operand1, '$zero', immediate)
+
+# Encode a ble instruction
+@assembler.instruction('ble! #, #, #', 2)
+def ble(operand1, operand2, immediate):
+  return slt(operand1, operand2, operand1) + beq(operand1, '$zero', immediate)
+
+# Encode a bge instruction
+@assembler.instruction('bge! #, #, #', 2)
+def bge(operand1, operand2, immediate):
+  return slt(operand1, operand1, operand2) + beq(operand1, '$zero', immediate)
+
+# Encode a bgt instruction
+@assembler.instruction('bgt! #, #, #', 2)
+def bgt(operand1, operand2, immediate):
+  return slt(operand1, operand2, operand1) + bne(operand1, '$zero', immediate)
+
 # Encode a nop instruction
 @assembler.instruction('nop', 1)
 def nop():
