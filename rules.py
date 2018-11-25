@@ -143,6 +143,21 @@ def lb(dest, immediate, operand1):
 def sb(dest, immediate, operand1):
   return pips.iformat(opcode='sb', r0=dest, r1=operand1, imm=immediate)
 
+# Encode an sll instruction
+@assembler.instruction('sll #, #, #', 1)
+def sll(dest, operand1, immediate):
+  return pips.rformat(opcode='add', r0=dest, r1='$zero', r2=operand1, shift_type=pips.SHIFT_LEFT, shift_amt=immediate)
+
+# Encode an srl instruction
+@assembler.instruction('srl #, #, #', 1)
+def srl(dest, operand1, immediate):
+  return pips.rformat(opcode='add', r0=dest, r1='$zero', r2=operand1, shift_type=pips.SHIFT_RIGHT_LOGICAL, shift_amt=immediate)
+
+# Encode an sra instruction
+@assembler.instruction('sra #, #, #', 1)
+def sra(dest, operand1, immediate):
+  return pips.rformat(opcode='add', r0=dest, r1='$zero', r2=operand1, shift_type=pips.SHIFT_RIGHT_ARITHMETIC, shift_amt=immediate)
+
 # Encode a nop instruction
 @assembler.instruction('nop', 1)
 def nop():
